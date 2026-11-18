@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:just_audio/just_audio.dart';
 
 // TODO: remplace par ton "client_id" Jamendo (devportal.jamendo.com)
-const String kClientId = 'METS_TON_CLIENT_ID_ICI';
+const String kClientId = f62b3ab1;
 
 const Color kBg = Color(0xFF07090D);
 const Color kPanel = Color(0xFF0F141B);
