@@ -1,16 +1,27 @@
 name: jamendo_player
-description: Lecteur de musique en streaming avec Jamendo.
+description: Home - application de musique en streaming.
 publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.0.0 <5.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   http: ^1.2.0
   just_audio: ^0.9.40
+  shared_preferences: ^2.2.3
+
+dev_dependencies:
+  flutter_launcher_icons: ^0.14.1
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "icon.png"
 
 flutter:
   uses-material-design: true
+  assets:
+    - logo.png
