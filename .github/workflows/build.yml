@@ -30,6 +30,10 @@ jobs:
 
       - run: flutter pub get
 
+      - name: Icone de l'appli (sans bloquer le build si ca echoue)
+        continue-on-error: true
+        run: dart run flutter_launcher_icons
+
       - run: flutter build apk --release
 
       - uses: actions/upload-artifact@v4
