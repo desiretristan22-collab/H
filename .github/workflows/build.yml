@@ -42,11 +42,99 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo apt-get install -y imagemagick
-          identify icon.png
+          cat > icon.b64 <<'EOF'
+          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
+          ERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERER
+          ERERERERERERERERF//Z
+          EOF
+          base64 -d icon.b64 > icon_home.jpg
+          IM=$(command -v magick || command -v convert)
           for d in mdpi:48 hdpi:72 xhdpi:96 xxhdpi:144 xxxhdpi:192; do
             n=${d%%:*}; s=${d##*:}
             mkdir -p android/app/src/main/res/mipmap-$n
-            convert icon.png -resize ${s}x${s} android/app/src/main/res/mipmap-$n/ic_launcher.png
+            $IM icon_home.jpg -resize ${s}x${s} android/app/src/main/res/mipmap-$n/ic_launcher.png
           done
           ls -l android/app/src/main/res/mipmap-*/ic_launcher.png
 
