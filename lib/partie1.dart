@@ -199,7 +199,17 @@ class EventCard extends StatelessWidget {
 // Application
 // ---------------------------------------------------------------------------
 
-void main() => runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await JustAudioBackground.init(
+      androidNotificationChannelId: 'com.home.app.audio',
+      androidNotificationChannelName: 'Home - lecture',
+      androidNotificationOngoing: true,
+    );
+  } catch (_) {}
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
