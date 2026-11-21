@@ -28,6 +28,14 @@ jobs:
           sed -i -e 's#<application#<uses-permission android:name="android.permission.INTERNET"/>\n    <application android:usesCleartextTraffic="true"#' android/app/src/main/AndroidManifest.xml
           sed -i -e 's#android:label="[^"]*"#android:label="Home"#' android/app/src/main/AndroidManifest.xml
 
+      - name: Lecture en arriere-plan (notification)
+        run: |
+          M=android/app/src/main/AndroidManifest.xml
+          sed -i -e 's#<application#<uses-permission android:name="android.permission.WAKE_LOCK"/>\n    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>\n    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>\n    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>\n    <application#' $M
+          sed -i -e 's#</application>#<service android:name="com.ryanheise.audioservice.AudioService" android:foregroundServiceType="mediaPlayback" android:exported="true"><intent-filter><action android:name="android.media.browse.MediaBrowserService"/></intent-filter></service>\n        <receiver android:name="com.ryanheise.audioservice.MediaButtonReceiver" android:exported="true"><intent-filter><action android:name="android.intent.action.MEDIA_BUTTON"/></intent-filter></receiver>\n    </application>#' $M
+          sed -i -e 's#android:name="\.MainActivity"#android:name="com.ryanheise.audioservice.AudioServiceActivity"#' $M
+          cat $M
+
       - run: flutter pub get
 
       - name: Icone de l'appli (sans bloquer le build si ca echoue)
