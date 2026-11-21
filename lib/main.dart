@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'partie1.dart';
@@ -205,8 +207,15 @@ class AppState extends ChangeNotifier {
     player.processingStateStream.listen((s) {
       if (s == ProcessingState.completed) next();
     });
+    _askNotif();
     await _loadFavs();
     await load('');
+  }
+
+  Future<void> _askNotif() async {
+    try {
+      await Permission.notification.request();
+    } catch (_) {}
   }
 
   List<MapEntry<String, int>> get artists {
@@ -254,7 +263,17 @@ class AppState extends ChangeNotifier {
     current = list[i];
     notifyListeners();
     try {
-      await player.setAudioSource(AudioSource.uri(Uri.parse(list[i].audio)));
+      final t = list[i];
+      await player.setAudioSource(AudioSource.uri(
+        Uri.parse(t.audio),
+        tag: MediaItem(
+          id: t.id,
+          title: t.name,
+          artist: t.artist,
+          duration: t.duration > 0 ? Duration(seconds: t.duration) : null,
+          artUri: t.image.isNotEmpty ? Uri.parse(t.image) : null,
+        ),
+      ));
       await player.play();
     } catch (e) {
       toast('Lecture impossible');
